@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #625834;
+}
+
+.FormPanel {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+}
+
+.jumbotron {
+  background-color: #fffbdb;
+}
+
+.btn-primary {
+  background-color: #da7422;
+  border-color: #da7422;
+  outline-color: #da7422;
+}
+
+.btn-primary:hover {
+  background-color: #e8912a;
+  border-color: #625834;
+}
+
+.btn-primary:disabled,
+.btn-primary.disabled {
+  background-color: #ec9c2e;
+  border-color: #ec9c2e;
+}
+
+.btn-primary:not(:disabled):not(.disabled):focus,
+.btn-primary:not(:disabled):not(.disabled):active {
+  background-color: #ec9c2e;
+  border-color: #ec9c2e;
+  box-shadow: 0 0 0 0.2rem rgb(218 116 34 / 50%);
+}
+
+.form-control:focus {
+  border-color: #da7422;
+  box-shadow: 0 0 0 0.2rem rgb(218 116 34 / 50%);
+}
+
+.Buttons .btn + .btn {
+  margin-left: 8px;
+}

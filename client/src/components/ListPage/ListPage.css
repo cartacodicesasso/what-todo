@@ -1,0 +1,22 @@
+.ListPage h2 {
+  margin-top: 32px;
+  color: #fffbdb;
+  text-align: center;
+}
+
+.ListPage .accordion {
+  margin-bottom: 16px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.accordion .card-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.accordion .card {
+  background-color: #fffbdb;
+}
