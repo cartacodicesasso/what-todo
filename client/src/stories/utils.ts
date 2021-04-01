@@ -1,8 +1,9 @@
 import { option } from "fp-ts";
+import { NonEmptyArray } from "fp-ts/NonEmptyArray";
 import { NonEmptyString } from "io-ts-types";
 import { Item } from "../globalDomain";
 
-export const fakeItems: Item[] = [
+export const fakeItems: NonEmptyArray<Item> = [
   {
     id: 5,
     title: "Natus sed sit nisi fugiat" as NonEmptyString,

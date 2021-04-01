@@ -8,7 +8,8 @@ import { List } from "../List/List";
 import "./ListPage.css";
 import { ItemForm, FormData } from "../ItemForm";
 import { pipe } from "fp-ts/function";
-import { option, taskEither } from "fp-ts";
+import { nonEmptyArray, option, taskEither } from "fp-ts";
+import { NonEmptyArray } from "fp-ts/NonEmptyArray";
 
 interface Props {
   items: Item[];
@@ -62,17 +63,45 @@ export const ListPage: FC<Props> = (props) => {
           </Accordion.Collapse>
         </Card>
       </Accordion>
-      <List
-        items={toDoItems}
-        onListItemChange={props.onListItemChange}
-        onListItemDelete={props.onListItemDelete}
-      />
+      {pipe(
+        toDoItems,
+        nonEmptyArray.fromArray,
+        option.fold(
+          () => (
+            <Card onClick={() => setIsFormVisible(true)}>
+              <Card.Body>
+                You have no things to do. Click on "Add new item" do add one.
+              </Card.Body>
+            </Card>
+          ),
+          (items: NonEmptyArray<Item>) => (
+            <List
+              items={items}
+              onListItemChange={props.onListItemChange}
+              onListItemDelete={props.onListItemDelete}
+            />
+          )
+        )
+      )}
       <h2>Done</h2>
-      <List
-        items={doneItems}
-        onListItemChange={props.onListItemChange}
-        onListItemDelete={props.onListItemDelete}
-      />
+      {pipe(
+        doneItems,
+        nonEmptyArray.fromArray,
+        option.fold(
+          () => (
+            <Card>
+              <Card.Body>Nothing done to show.</Card.Body>
+            </Card>
+          ),
+          (items) => (
+            <List
+              items={items}
+              onListItemChange={props.onListItemChange}
+              onListItemDelete={props.onListItemDelete}
+            />
+          )
+        )
+      )}
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { NonEmptyArray } from "fp-ts/NonEmptyArray";
 import { ReaderTaskEither } from "fp-ts/ReaderTaskEither";
 import { FC } from "react";
 import { Item } from "../../globalDomain";
@@ -5,7 +6,7 @@ import { ListItem } from "../ListItem/ListItem";
 import "./List.css";
 
 interface Props {
-  items: Item[];
+  items: NonEmptyArray<Item>;
   onListItemChange: ReaderTaskEither<Item, string, unknown>;
   onListItemDelete: ReaderTaskEither<Item, string, unknown>;
 }

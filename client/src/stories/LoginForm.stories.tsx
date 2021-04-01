@@ -5,21 +5,20 @@ import { Reader } from "fp-ts/Reader";
 import { ReaderTaskEither } from "fp-ts/ReaderTaskEither";
 import {
   LoginForm as LoginFormComponent,
-  LoginRequestInput,
+  FormData,
 } from "../components/LoginForm";
 import { W2DStory } from "./W2DStory";
 
 interface Props {
   shouldFail: boolean;
-  onSubmit: Reader<LoginRequestInput, void>;
+  onSubmit: Reader<FormData, void>;
 }
 
 const LoginFormTemplate: Story<Props> = (props) => {
-  const onSubmit: ReaderTaskEither<LoginRequestInput, string, void> = pipe(
+  const onSubmit: ReaderTaskEither<FormData, string, void> = pipe(
     props.shouldFail,
     boolean.fold(
-      () => (input: LoginRequestInput) =>
-        taskEither.fromIO(() => props.onSubmit(input)),
+      () => (input: FormData) => taskEither.fromIO(() => props.onSubmit(input)),
       () => readerTaskEither.left("I'm an error!")
     )
   );

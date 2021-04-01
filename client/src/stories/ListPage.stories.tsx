@@ -13,7 +13,7 @@ import { W2DStory } from "./W2DStory";
 interface Props {}
 
 const ListPageTemplate: Story<Props> = () => {
-  const [items, setItems] = useState(fakeItems);
+  const [items, setItems] = useState(fakeItems as Item[]);
 
   const onListItemChange: ReaderTaskEither<Item, string, void> = (
     changedItem

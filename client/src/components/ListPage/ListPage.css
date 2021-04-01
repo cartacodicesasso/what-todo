@@ -4,7 +4,8 @@
   text-align: center;
 }
 
-.ListPage .accordion {
+.ListPage .accordion,
+.ListPage .card {
   margin-bottom: 16px;
   max-width: 720px;
   margin-left: auto;

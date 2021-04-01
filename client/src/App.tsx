@@ -1,7 +1,12 @@
-import { LoginPage } from "./pages/LoginPage";
+import { ApiController } from "./components/ApiController";
+import { AccountContextProvider } from "./contexts/AccountContext";
 
 function App() {
-  return <LoginPage />;
+  return (
+    <AccountContextProvider>
+      <ApiController />
+    </AccountContextProvider>
+  );
 }
 
 export default App;

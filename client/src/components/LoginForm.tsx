@@ -8,29 +8,40 @@ import { ReaderTaskEither } from "fp-ts/ReaderTaskEither";
 import { Option } from "fp-ts/Option";
 import Jumbotron from "react-bootstrap/Jumbotron";
 
-export interface LoginRequestInput {
+export interface FormData {
   username: string;
   password: string;
 }
 
 interface Props {
-  onSubmit: ReaderTaskEither<LoginRequestInput, string, unknown>;
+  onSubmit: ReaderTaskEither<FormData, string, unknown>;
 }
 
 export const LoginForm: FC<Props> = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<Option<string>>(option.none);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(false);
+    setError(option.none);
 
     pipe(
       props.onSubmit({
         username,
         password,
       }),
-      taskEither.mapLeft(flow(option.some, setError))
+      taskEither.bimap(
+        (error) => {
+          setError(option.some(error));
+          setIsSubmitting(false);
+        },
+        () => {
+          setIsSubmitting(false);
+        }
+      )
     )();
   };
 
@@ -67,7 +78,7 @@ export const LoginForm: FC<Props> = (props) => {
           ))
         )}
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={isSubmitting}>
           Submit
         </Button>
       </Form>

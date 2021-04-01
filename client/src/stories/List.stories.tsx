@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/react";
-import { task, taskEither } from "fp-ts";
-import { pipe } from "fp-ts/function";
+import { nonEmptyArray, option, task, taskEither } from "fp-ts";
+import { constNull, pipe } from "fp-ts/function";
 import { ReaderTaskEither } from "fp-ts/ReaderTaskEither";
 import { useState } from "react";
 import { List as ListComponent } from "../components/List/List";
@@ -12,7 +12,7 @@ import { removeItemFromArray, setChangedArrayItem } from "../utils/arrayUtils";
 interface Props {}
 
 const ListTemplate: Story<Props> = () => {
-  const [items, setItems] = useState(fakeItems);
+  const [items, setItems] = useState(fakeItems as Item[]);
 
   const onListItemChange: ReaderTaskEither<Item, string, unknown> = (
     changedItem: Item
@@ -36,11 +36,17 @@ const ListTemplate: Story<Props> = () => {
 
   return (
     <W2DStory>
-      <ListComponent
-        items={items}
-        onListItemChange={onListItemChange}
-        onListItemDelete={onListItemDelete}
-      />
+      {pipe(
+        items,
+        nonEmptyArray.fromArray,
+        option.fold(constNull, (items) => (
+          <ListComponent
+            items={items}
+            onListItemChange={onListItemChange}
+            onListItemDelete={onListItemDelete}
+          />
+        ))
+      )}
     </W2DStory>
   );
 };
